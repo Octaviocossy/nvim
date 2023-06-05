@@ -28,20 +28,20 @@ function M.get_root()
 				end
 			end
 		end
-	end
-	table.sort(roots, function(a, b)
-		return #a > #b
-	end)
-	---@type string?
-	local root = roots[1]
-	if not root then
-		path = path and vim.fs.dirname(path) or vim.loop.cwd()
+		table.sort(roots, function(a, b)
+			return #a > #b
+		end)
 		---@type string?
-		root = vim.fs.find(M.root_patterns, { path = path, upward = true })[1]
-		root = root and vim.fs.dirname(root) or vim.loop.cwd()
+		local root = roots[1]
+		if not root then
+			path = path and vim.fs.dirname(path) or vim.loop.cwd()
+			---@type string?
+			root = vim.fs.find(M.root_patterns, { path = path, upward = true })[1]
+			root = root and vim.fs.dirname(root) or vim.loop.cwd()
+		end
+		---@cast root string
+		return root
 	end
-	---@cast root string
-	return root
 end
 
 return M

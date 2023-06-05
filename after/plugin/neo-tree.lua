@@ -228,5 +228,3 @@ local command = require("neo-tree.command")
 vim.keymap.set("n", "<Leader>e", function()
 	command.execute({ toggle = true, dir = require("utils").get_root() })
 end)
-
---
