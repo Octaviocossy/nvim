@@ -16,7 +16,7 @@ return require("packer").startup(function()
 	use({ "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim" })
 
 	-- Colorscheme
-  use { "catppuccin/nvim", as = "catppuccin" }
+	use({ "catppuccin/nvim", as = "catppuccin" })
 
 	-- File explorer
 	use({
@@ -83,6 +83,12 @@ return require("packer").startup(function()
 
 	-- Bufferline
 	use({ "akinsho/bufferline.nvim", tag = "*" })
+
+	-- Ident line
+	use("lukas-reineke/indent-blankline.nvim")
+
+	-- better ui
+	use("folke/noice.nvim")
 
 	if packer_bootstrap then
 		require("packer").sync()

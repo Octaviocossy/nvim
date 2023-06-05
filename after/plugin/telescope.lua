@@ -42,4 +42,3 @@ end)
 vim.keymap.set("n", "<Leader>sw", function()
 	builtin.grep_string()
 end)
-
