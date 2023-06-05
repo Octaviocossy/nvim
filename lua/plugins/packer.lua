@@ -90,6 +90,9 @@ return require("packer").startup(function()
 	-- better ui
 	use("folke/noice.nvim")
 
+  -- better notifications
+  use("rcarriga/nvim-notify")
+
 	if packer_bootstrap then
 		require("packer").sync()
 	end
