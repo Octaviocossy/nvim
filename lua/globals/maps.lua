@@ -11,5 +11,5 @@ keymap.set("n", "tn", "<cmd>tabnext<cr><esc>")
 keymap.set("n", "tp", "<cmd>tabprevious<cr><esc>")
 
 -- Split Window
-keymap.set("n", "h", "<cmd>split<cr><C-w>w")
-keymap.set("n", "v", "<cmd>vsplit<cr><C-w>w")
+keymap.set("n", "<Leader>h", "<cmd>split<cr><C-w>w")
+keymap.set("n", "<Leader>v", "<cmd>vsplit<cr><C-w>w")
