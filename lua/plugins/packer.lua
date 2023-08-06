@@ -20,10 +20,9 @@ return require("packer").startup(function()
 
 	-- File explorer
 	use({
-		"nvim-neo-tree/neo-tree.nvim",
-		branch = "v2.x",
+		"nvim-tree/nvim-tree.lua",
 		requires = {
-			"nvim-lua/plenary.nvim",
+      "nvim-lua/plenary.nvim",
 			"nvim-tree/nvim-web-devicons",
 		},
 	})
