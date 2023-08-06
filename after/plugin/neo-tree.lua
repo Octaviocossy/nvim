@@ -77,7 +77,7 @@ neotree.setup({
 	commands = {},
 	window = {
 		position = "right",
-		width = 45,
+		width = 60,
 		mapping_options = {
 			noremap = true,
 			nowait = true,
