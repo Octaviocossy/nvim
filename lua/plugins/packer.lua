@@ -22,7 +22,7 @@ return require("packer").startup(function()
 	use({
 		"nvim-tree/nvim-tree.lua",
 		requires = {
-      "nvim-lua/plenary.nvim",
+			"nvim-lua/plenary.nvim",
 			"nvim-tree/nvim-web-devicons",
 		},
 	})
