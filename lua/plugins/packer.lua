@@ -59,7 +59,7 @@ return require("packer").startup(function()
 		"neovim/nvim-lspconfig",
 		"jose-elias-alvarez/null-ls.nvim",
 		"onsails/lspkind-nvim",
-		"glepnir/lspsaga.nvim",
+		"nvimdev/lspsaga.nvim",
 	})
 
 	-- Treesitter
