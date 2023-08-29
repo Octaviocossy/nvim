@@ -16,7 +16,7 @@ return require("packer").startup(function()
 	use({ "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim" })
 
 	-- Colorscheme
-	use({ "rose-pine/neovim", as = "rose-pine" })
+	use("lunarvim/darkplus.nvim")
 
 	-- File explorer
 	use({
