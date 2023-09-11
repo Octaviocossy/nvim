@@ -60,6 +60,7 @@ return require("packer").startup(function()
 		"jose-elias-alvarez/null-ls.nvim",
 		"onsails/lspkind-nvim",
 		"nvimdev/lspsaga.nvim",
+		"github/copilot.vim",
 	})
 
 	-- Treesitter
