@@ -14,10 +14,10 @@ end
 theme.setup({
   style = "storm",
   light_style = "day",
-  transparent = true,
+  transparent = false,
   styles = {
-    sidebars = "transparent", -- transparent / normal
-    floats = "transparent",   -- transparent / normal
+    sidebars = "normal", -- transparent / normal
+    floats = "normal",   -- transparent / normal
   },
 })
 
