@@ -5,6 +5,7 @@ local servers = {
   "jsonls",
   "cssls",
   "prismals",
+  "rust_analyzer"
 }
 
 return servers

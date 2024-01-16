@@ -61,6 +61,7 @@ return require("packer").startup(function()
     "onsails/lspkind-nvim",
     "nvimdev/lspsaga.nvim",
     "github/copilot.vim",
+    "RRethy/vim-illuminate"
   })
 
   -- Treesitter
