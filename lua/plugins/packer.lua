@@ -19,7 +19,7 @@ return require("packer").startup(function()
 	use({ "navarasu/onedark.nvim" })
 
 	-- File explorer
-	use({ "nvim-neo-tree/neo-tree.nvim" })
+	use({ "nvim-tree/nvim-tree.lua" })
 
 	-- Tmux nav
 	use("alexghergh/nvim-tmux-navigation")
