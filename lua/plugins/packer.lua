@@ -16,7 +16,7 @@ return require("packer").startup(function()
 	use({ "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim", "nvim-tree/nvim-web-devicons" })
 
 	-- Colorscheme
-	use({ "navarasu/onedark.nvim" })
+	use("loctvl842/monokai-pro.nvim")
 
 	-- File explorer
 	use({ "nvim-tree/nvim-tree.lua" })
