@@ -13,6 +13,7 @@ end
 
 theme.setup({
 	flavour = "macchiato",
+	no_italic = true,
 })
 
 local present, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
