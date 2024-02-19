@@ -12,7 +12,7 @@ if not theme_status then
 end
 
 theme.setup({
-	flavour = "mocha",
+	flavour = "mocha", -- latte (light)
 	transparent_background = false,
 })
 
