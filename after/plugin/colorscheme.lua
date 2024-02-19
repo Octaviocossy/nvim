@@ -13,6 +13,7 @@ end
 
 theme.setup({
 	flavour = "mocha",
+	transparent_background = false,
 })
 
 local present, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
