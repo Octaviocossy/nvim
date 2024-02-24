@@ -16,7 +16,7 @@ return require("packer").startup(function()
 	use({ "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim", "nvim-tree/nvim-web-devicons" })
 
 	-- Colorscheme
-	use({ "catppuccin/nvim", as = "catppuccin" })
+	use({ "ellisonleao/gruvbox.nvim", as = "gruvbox" })
 
 	-- File explorer
 	use({ "nvim-tree/nvim-tree.lua" })

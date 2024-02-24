@@ -1,4 +1,4 @@
-local colorscheme = "catppuccin"
+local colorscheme = "gruvbox"
 
 local theme_status, theme = pcall(require, colorscheme)
 
@@ -12,8 +12,13 @@ if not theme_status then
 end
 
 theme.setup({
-	flavour = "mocha", -- latte (light)
-	transparent_background = false,
+  italics = {
+    strings = false,
+    emphasis = false,
+    folds = false,
+  },
+  contrast = "hard", -- can be "hard", "soft" or empty string
+  transparent_mode = false
 })
 
 local present, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
