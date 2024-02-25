@@ -12,13 +12,15 @@ if not theme_status then
 end
 
 theme.setup({
-  italics = {
-    strings = false,
-    emphasis = false,
-    folds = false,
-  },
-  contrast = "hard", -- can be "hard", "soft" or empty string
-  transparent_mode = false
+	italic = {
+		strings = false,
+		emphasis = false,
+		comments = true,
+		operators = false,
+		folds = false,
+	},
+	contrast = "hard", -- can be "hard", "soft" or empty string
+	transparent_mode = false,
 })
 
 local present, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
