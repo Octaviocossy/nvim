@@ -1,4 +1,4 @@
-local colorscheme = "gruvbox"
+local colorscheme = "rose-pine"
 
 local theme_status, theme = pcall(require, colorscheme)
 
@@ -12,15 +12,13 @@ if not theme_status then
 end
 
 theme.setup({
-	italic = {
-		strings = false,
-		emphasis = false,
-		comments = true,
-		operators = false,
-		folds = false,
+	variant = "main", -- auto, main, moon, or dawn
+	dark_variant = "main", -- main, moon, or dawn
+	styles = {
+		bold = true,
+		italic = true,
+		transparency = false,
 	},
-	contrast = "hard", -- can be "hard", "soft" or empty string
-	transparent_mode = false,
 })
 
 local present, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
