@@ -24,13 +24,13 @@ lualine.setup({
 			},
 		},
 		lualine_x = {
+			"encoding",
 			{
 				"diff",
 				"diagnostics",
 				sources = { "nvim_diagnostic" },
 				symbols = { error = " ", warn = " ", info = " ", hint = " " },
 			},
-			"encoding",
 			"filetype",
 		},
 		lualine_y = { "progress" },
