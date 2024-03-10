@@ -5,3 +5,5 @@ if not status_ok then
 end
 
 spectre.setup()
+
+vim.keymap.set("n", "<Leader>r", "<cmd>Spectre<cr><C-w>w")

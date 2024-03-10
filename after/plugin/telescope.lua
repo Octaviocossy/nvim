@@ -19,7 +19,6 @@ telescope.setup({
 	pickers = {
 		find_files = {
 			prompt_prefix = "🔍 ",
-			theme = "dropdown",
 		},
 	},
 })
@@ -43,12 +42,4 @@ end)
 
 vim.keymap.set("n", "<Leader>gc", function()
 	builtin.git_commits()
-end)
-
-vim.keymap.set("n", "<Leader>gs", function()
-	builtin.git_status()
-end)
-
-vim.keymap.set("n", "<Leader>sw", function()
-	builtin.grep_string()
 end)
