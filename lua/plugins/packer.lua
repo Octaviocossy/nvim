@@ -88,6 +88,9 @@ return require("packer").startup(function()
 	-- better indent lines
 	use("lukas-reineke/indent-blankline.nvim")
 
+	-- text mod
+	use("nvim-pack/nvim-spectre")
+
 	if packer_bootstrap then
 		require("packer").sync()
 	end
