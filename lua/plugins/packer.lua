@@ -71,7 +71,7 @@ return require("packer").startup(function()
 	use("numToStr/Comment.nvim")
 
 	-- Git
-	use("lewis6991/gitsigns.nvim")
+	use({ "lewis6991/gitsigns.nvim", "sindrets/diffview.nvim" })
 
 	-- Colorizer
 	use("norcalli/nvim-colorizer.lua")
