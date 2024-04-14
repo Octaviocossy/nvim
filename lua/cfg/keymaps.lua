@@ -16,3 +16,6 @@ nnoremap("<leader>e", function() require("oil").toggle_float() end)
 -- Telescope
 nnoremap("<leader>sf", function() require("telescope.builtin").find_files({ hidden = true }) end, { desc = "[S]earch [F]iles" })
 nnoremap("<leader>sg", function() require("telescope.builtin").live_grep() end, { desc = "[S]earch by [G]rep" })
+nnoremap("<leader>/", function() require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes")
+  .get_dropdown({ previewer = false })) end, { desc = "[/] Fuzzily search in current buffer]" })
+
