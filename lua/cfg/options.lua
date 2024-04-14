@@ -73,5 +73,5 @@ vim.opt.clipboard:prepend({ "unnamedplus" })
 vim.opt.shortmess:append("c")
 
 for x, y in pairs(options) do
-	vim.opt[x] = y
+  vim.opt[x] = y
 end
