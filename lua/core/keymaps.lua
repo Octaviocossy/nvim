@@ -1,5 +1,5 @@
-local nnoremap = require("cfg.utils").keymap_nnoremap
-local inoremap = require("cfg.utils").keymap_inoremap
+local nnoremap = require("core.utils").keymap_nnoremap
+local inoremap = require("core.utils").keymap_inoremap
 
 local M = {}
 

@@ -16,7 +16,7 @@ return {
       { "j-hui/fidget.nvim", opts = {} },
     },
     config = function()
-      local map_lsp_keybinds = require("cfg.keymaps").map_lsp_keybinds -- Has to load keymaps before pluginslsp
+      local map_lsp_keybinds = require("core.keymaps").map_lsp_keybinds -- Has to load keymaps before pluginslsp
 
       -- Override tsserver diagnostics to filter out specific messages
       local messages_to_filter = {
