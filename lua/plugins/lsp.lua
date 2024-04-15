@@ -79,7 +79,11 @@ return {
         -- LSP Servers
         cssls = {},
         html = {},
-        jsonls = {},
+        rust_analyzer = {
+          cargo = {
+            allFeatures = true,
+          },
+        },
         lua_ls = {
           settings = {
             Lua = {
@@ -98,7 +102,8 @@ return {
           },
         },
         tailwindcss = {},
-        angularls = {},
+        prismals = {},
+        -- angularls = {},
         tsserver = {
           settings = {
             maxTsServerMemory = 12288,
