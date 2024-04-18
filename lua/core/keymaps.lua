@@ -1,4 +1,5 @@
 local nnoremap = require("core.utils").keymap_nnoremap
+local _nnoremap = require("core.utils").keymap_nmap
 local inoremap = require("core.utils").keymap_inoremap
 
 local M = {}
@@ -148,6 +149,15 @@ nnoremap("zM", function()
 end)
 
 -- Git keymaps --
-nnoremap("<leader>lg", ":LazyGit<cr>")
+nnoremap("<leader>gs", ":DiffviewOpen<cr>")
+
+-- Bufferline
+nnoremap("te", ":tabnew<cr>")
+nnoremap("tc", ":tabclose<cr>")
+nnoremap("tn", ":tabnext<cr>")
+nnoremap("tp", ":tabprevious<cr>")
+
+_nnoremap("<Tab>", ":BufferLineCycleNext<cr>")
+_nnoremap("<S-Tab>", ":BufferLineCyclePrev<cr>")
 
 return M

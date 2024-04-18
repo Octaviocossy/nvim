@@ -77,8 +77,6 @@ return {
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         -- LSP Servers
-        cssls = {},
-        html = {},
         rust_analyzer = {
           cargo = {
             allFeatures = true,
@@ -101,9 +99,6 @@ return {
             },
           },
         },
-        tailwindcss = {},
-        prismals = {},
-        -- angularls = {},
         tsserver = {
           settings = {
             maxTsServerMemory = 12288,
