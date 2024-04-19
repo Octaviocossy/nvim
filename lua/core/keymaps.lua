@@ -92,7 +92,7 @@ end, { desc = "Move to right panel" })
 
 -- Press leader f to format
 nnoremap("<leader>f", function()
-  require("conform").format({ async = true, lsp_fallback = true })
+  vim.lsp.buf.format({ timeout_ms = 5000 })
 end, { desc = "Format the current buffer" })
 
 -- Diagnostics

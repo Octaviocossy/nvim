@@ -157,22 +157,28 @@ return {
     end,
   },
   {
-    "stevearc/conform.nvim",
-    event = { "BufWritePre" },
-    cmd = { "ConformInfo" },
-    opts = {
-      notify_on_error = false,
-      format_on_save = {
-        async = true,
-        timeout_ms = 500,
-        lsp_fallback = true,
-      },
-      formatters_by_ft = {
-        javascript = { { "prettierd", "prettier" } },
-        typescript = { { "prettierd", "prettier" } },
-        typescriptreact = { { "prettierd", "prettier" } },
-        lua = { "stylua" },
-      },
-    },
+    "jose-elias-alvarez/null-ls.nvim",
+    config = function()
+      local null_ls_status_ok, null_ls = pcall(require, "null-ls")
+
+      if not null_ls_status_ok then
+        return
+      end
+
+      -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/formatting
+      local formatting = null_ls.builtins.formatting
+      -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
+      local diagnostics = null_ls.builtins.diagnostics
+
+      null_ls.setup({
+        debug = false,
+        sources = {
+          formatting.prettier,
+          formatting.eslint_d,
+          formatting.stylua,
+          diagnostics.eslint_d,
+        },
+      })
+    end,
   },
 }
