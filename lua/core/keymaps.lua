@@ -160,4 +160,7 @@ nnoremap("tp", ":tabprevious<cr>")
 _nnoremap("<Tab>", ":BufferLineCycleNext<cr>")
 _nnoremap("<S-Tab>", ":BufferLineCyclePrev<cr>")
 
+-- Turn off highlighted results
+nnoremap("<leader>no", "<cmd>noh<cr>")
+
 return M
