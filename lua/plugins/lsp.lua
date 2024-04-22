@@ -104,17 +104,15 @@ return {
             maxTsServerMemory = 12288,
           },
           handlers = {
-            ["textDocument/publishDiagnostics"] = vim.lsp.with(tsserver_on_publish_diagnostics_override, {}),
+            ["textDocument/publishDiagnostics"] = vim.lsp.with(
+              tsserver_on_publish_diagnostics_override,
+              {}
+            ),
           },
         },
       }
 
-      local formatters = {
-        prettierd = {},
-        stylua = {},
-      }
-
-      local ensure_installed = vim.tbl_keys(vim.tbl_deep_extend("force", {}, servers, formatters))
+      local ensure_installed = vim.tbl_keys(vim.tbl_deep_extend("force", {}, servers))
 
       require("mason-tool-installer").setup({
         auto_update = true,
