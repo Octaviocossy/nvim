@@ -1,45 +1,71 @@
 return {
-  {
-    "nvim-lualine/lualine.nvim",
-    event = "VeryLazy",
-    config = function()
-      local function truncate_branch_name(branch)
-        if not branch or branch == "" then
-          return ""
-        end
-
-        -- Match the branch name to the specified format
-        local user, team, ticket_number = string.match(branch, "^(%w+)/(%w+)%-(%d+)")
-
-        -- If the branch name matches the format, display {user}/{team}-{ticket_number}, otherwise display the full branch name
-        if ticket_number then
-          return user .. "/" .. team .. "-" .. ticket_number
-        else
-          return branch
-        end
-      end
-
-      require("lualine").setup({
-        options = {
-          theme = "catppuccin",
-          globalstatus = true,
-          component_separators = { left = "", right = "" },
-          section_separators = { left = "█", right = "█" },
-        },
-        sections = {
-          lualine_b = {
-            { "branch", icon = "", fmt = truncate_branch_name },
-            "diff",
-            "diagnostics",
-          },
-          lualine_c = {
-            { "filename", path = 1 },
-          },
-          lualine_x = {
-            "filetype",
-          },
-        },
-      })
-    end,
+  "nvim-lualine/lualine.nvim",
+  dependencies = {
+    "meuter/lualine-so-fancy.nvim",
   },
+  enabled = true,
+  lazy = false,
+  event = { "BufReadPost", "BufNewFile", "VeryLazy" },
+  config = function()
+    require("lualine").setup({
+      options = {
+        theme = "auto",
+        globalstatus = true,
+        icons_enabled = true,
+        component_separators = { left = "|", right = "|" },
+        section_separators = { left = "", right = "" },
+        disabled_filetypes = {
+          statusline = {
+            "alfa-nvim",
+            "help",
+            "oil",
+            "Trouble",
+            "spectre_panel",
+            "toggleterm",
+          },
+          winbar = {},
+        },
+      },
+      sections = {
+        lualine_a = {},
+        lualine_b = {
+          "fancy_branch",
+        },
+        lualine_c = {
+          {
+            "filename",
+            path = 1, -- 2 for full path
+            symbols = {
+              modified = "  ",
+              readonly = "  ",
+              unnamed = "  ",
+            },
+          },
+          {
+            "fancy_diagnostics",
+            sources = { "nvim_lsp" },
+            symbols = { error = " ", warn = " ", info = " " },
+          },
+          { "fancy_searchcount" },
+        },
+        lualine_x = {
+          "fancy_filetype",
+          "fancy_diff",
+          "progress",
+        },
+        lualine_y = {},
+        lualine_z = {},
+      },
+      inactive_sections = {
+        lualine_a = {},
+        lualine_b = {},
+        lualine_c = { "filename" },
+        lualine_x = { "location" },
+        lualine_y = {},
+        lualine_z = {},
+      },
+      tabline = {},
+      extensions = { "oil", "lazy" },
+    })
+  end,
 }
