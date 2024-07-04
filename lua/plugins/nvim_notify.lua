@@ -5,6 +5,10 @@ return {
     config = function()
       local notify = require("notify")
 
+      notify.setup({
+        background_colour = "#000000",
+      })
+
       local filtered_message = { "No information available" }
 
       -- Override notify function to filter out messages
