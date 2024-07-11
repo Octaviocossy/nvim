@@ -20,14 +20,14 @@ end)
 
 -- Telescope
 nnoremap("<leader>sf", function()
-  require("telescope.builtin").find_files(require("telescope.themes").get_dropdown({ winblend = 10 }))
+  require("telescope.builtin").find_files(require("telescope.themes"))
 end, { desc = "[S]earch [F]iles" })
 nnoremap("<leader>sg", function()
-  require("telescope.builtin").live_grep(require("telescope.themes").get_dropdown({ winblend = 10 }))
+  require("telescope.builtin").live_grep(require("telescope.themes"))
 end, { desc = "[S]earch by [G]rep" })
 nnoremap("<leader>/", function()
   require("telescope.builtin").current_buffer_fuzzy_find(
-    require("telescope.themes").get_dropdown({ previewer = false, winblend = 10 })
+    require("telescope.themes").get_dropdown({ previewer = false, winblend = 100 })
   )
 end, { desc = "[/] Fuzzily search in current buffer]" })
 
