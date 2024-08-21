@@ -33,8 +33,8 @@
 - [wilder](https://github.com/gelguy/wilder.nvim) - A more adventurous wildmenu.
 - [mini-ident-scope](https://github.com/echasnovski/mini.indentscope) - Plugin to visualize and operate on indent scope.
 - [comment](https://github.com/numToStr/Comment.nvim) -  Smart and powerful comment plugin for neovim.
-- [notify](https://github.com/rcarriga/nvim-notify) - A fancy, configurable, notification manager for NeoVim.
-- [fidget]() - .
+- [fidget](https://github.com/j-hui/fidget.nvim) - Extensible UI for Neovim notifications and LSP progress messages..
+- [NeoTree](https://github.com/nvim-neo-tree/neo-tree.nvim) - Neovim plugin to manage the file system and other tree like structures.
 - [diffview](https://github.com/sindrets/diffview.nvim) - Single tabpage interface for easily cycling through diffs.
 - [bufferline](https://github.com/akinsho/bufferline.nvim) - A snazzy bufferline for Neovim.
 - [null-ls](https://github.com/jose-elias-alvarez/null-ls.nvim) - Inject LSP diagnostics.
@@ -105,9 +105,8 @@
         ├── lualine.lua
         ├── mini_indentscope.lua
         ├── navic.lua
-        ├── notify.lua
+        ├── neotree.lua
         ├── fidget.lua
-        ├── nvim_notify.lua
         ├── oil.lua
         ├── spectre.lua
         ├── symbols_outline.lua

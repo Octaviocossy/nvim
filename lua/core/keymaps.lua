@@ -18,6 +18,9 @@ nnoremap("<leader>o", function()
   require("oil").toggle_float()
 end)
 
+-- NeoTree
+nnoremap("<leader>e", "<cmd>Neotree reveal<cr>", { silent = false })
+
 -- Telescope
 nnoremap("<leader>sf", function()
   require("telescope.builtin").find_files(require("telescope.themes"))
