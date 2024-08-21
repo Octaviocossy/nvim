@@ -14,7 +14,7 @@ nnoremap("<leader>w", "<cmd>w!<cr>", { silent = false })
 nnoremap("<leader>q", "<cmd>q!<cr>", { silent = false })
 
 -- Oil
-nnoremap("<leader>e", function()
+nnoremap("<leader>o", function()
   require("oil").toggle_float()
 end)
 
