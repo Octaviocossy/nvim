@@ -14,9 +14,9 @@ nnoremap("<leader>w", "<cmd>w!<cr>", { silent = false })
 nnoremap("<leader>q", "<cmd>q!<cr>", { silent = false })
 
 -- Oil
-nnoremap("<leader>o", function()
-  require("oil").toggle_float()
-end)
+-- nnoremap("<leader>o", function()
+--   require("oil").toggle_float()
+-- end)
 
 -- NeoTree
 nnoremap("<leader>e", "<cmd>Neotree reveal<cr>", { silent = false })
