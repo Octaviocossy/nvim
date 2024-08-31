@@ -141,25 +141,25 @@ return {
       end
 
       -- angularls custom config
-      local install_path = vim.fn.stdpath("data") .. "/mason/packages/angular-language-server/node_modules"
-      local ang = install_path .. "/@angular/language-server/node_modules"
-
-      local cmd = {
-        "ngserver",
-        "--stdio",
-        "--tsProbeLocations",
-        install_path,
-        "--ngProbeLocations",
-        ang,
-      }
-
-      require("lspconfig").angularls.setup({
-        on_attach = on_attach,
-        cmd = cmd,
-        on_new_config = function(new_config)
-          new_config.cmd = cmd
-        end,
-      })
+      -- local install_path = vim.fn.stdpath("data") .. "/mason/packages/angular-language-server/node_modules"
+      -- local ang = install_path .. "/@angular/language-server/node_modules"
+      --
+      -- local cmd = {
+      --   "ngserver",
+      --   "--stdio",
+      --   "--tsProbeLocations",
+      --   install_path,
+      --   "--ngProbeLocations",
+      --   ang,
+      -- }
+      --
+      -- require("lspconfig").angularls.setup({
+      --   on_attach = on_attach,
+      --   cmd = cmd,
+      --   on_new_config = function(new_config)
+      --     new_config.cmd = cmd
+      --   end,
+      -- })
 
       -- Setup mason so it can manage 3rd party LSP servers
       require("mason").setup({
