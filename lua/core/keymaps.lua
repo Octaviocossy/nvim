@@ -6,7 +6,10 @@ local M = {}
 
 -- Disable Space bar since it'll be used as the leader key
 nnoremap("<space>", "<nop>")
---
+
+-- Delete other buffers but the current one
+nnoremap("<leader>db", '<Esc>:%bdelete|edit #|normal`"<Return>', { desc = "Delete other buffers but the current one" })
+
 -- Save with leader key
 nnoremap("<leader>w", "<cmd>w!<cr>", { silent = false })
 
