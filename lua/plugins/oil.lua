@@ -36,6 +36,9 @@ return {
           show_hidden = true,
         },
       })
+
+      -- Execute Oil command when opening neovim
+      vim.cmd("Oil")
     end,
   },
 }
