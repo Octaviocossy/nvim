@@ -1,7 +1,7 @@
 local options = {
   -- Enable relative line numbers
   nu = true,
-  rnu = true,
+  rnu = false,
   -- Disable showing the mode below the statusline
   showmode = false,
   -- Set tabs to 2 spaces
