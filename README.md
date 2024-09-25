@@ -1,4 +1,5 @@
 # Dependencies
+
 **_Neovim:_** `npm install neovim` <br/>
 **_Eslint:_** `npm install -g eslint_d` <br/>
 **_Prettier:_** `npm install -g prettier` <br/>
@@ -77,8 +78,11 @@
 | `tc`           | Close current tab.                                    |
 | `tn`           | Go to next tab.                                       |
 | `tp`           | Go to previous tab.                                   |
+| `db`           | Delete other buffers but the current one.             |
+| `lr`           | Restart LSP.                                          |
 
 # Scaffolding
+
 ```
 ├── README.md
 ├── init.lua
