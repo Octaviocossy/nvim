@@ -10,7 +10,7 @@ nnoremap("<space>", "<nop>")
 -- Delete other buffers but the current one
 nnoremap("<leader>db", '<Esc>:%bdelete|edit #|normal`"<Return>', { desc = "Delete other buffers but the current one" })
 
--- Delete other buffers but the current one
+-- Restart LSP
 nnoremap("<leader>lr", '<cmd>LspRestart<cr>', { desc = "Restart LSP" })
 
 -- Save with leader key
