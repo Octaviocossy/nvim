@@ -11,7 +11,7 @@ return {
           strings = false, -- Boolean: Italicizes strings
           variables = false, -- Boolean: Italicizes variables
         },
-        overrides = {},  -- A dictionary of group names, can be a function returning a dictionary or a table.
+        overrides = {}, -- A dictionary of group names, can be a function returning a dictionary or a table.
         palette_overrides = {},
       })
     end,
@@ -43,6 +43,7 @@ return {
         dim_inactive = false,
         transparent_mode = true,
       })
+
       vim.cmd("colorscheme gruvbox")
     end,
   },

@@ -11,7 +11,7 @@ nnoremap("<space>", "<nop>")
 nnoremap("<leader>db", '<Esc>:%bdelete|edit #|normal`"<Return>', { desc = "Delete other buffers but the current one" })
 
 -- Restart LSP
-nnoremap("<leader>lr", '<cmd>LspRestart<cr>', { desc = "Restart LSP" })
+nnoremap("<leader>lr", "<cmd>LspRestart<cr>", { desc = "Restart LSP" })
 
 -- Save with leader key
 nnoremap("<leader>w", "<cmd>w!<cr>", { silent = false })
@@ -29,14 +29,14 @@ nnoremap("<leader>e", "<cmd>Neotree reveal<cr>", { silent = false })
 
 -- Telescope
 nnoremap("<leader>sf", function()
-  require("telescope.builtin").find_files(require("telescope.themes"))
+  require("telescope.builtin").find_files(require("telescope.themes").get_dropdown())
 end, { desc = "[S]earch [F]iles" })
 nnoremap("<leader>sg", function()
-  require("telescope.builtin").live_grep(require("telescope.themes"))
+  require("telescope.builtin").live_grep(require("telescope.themes").get_dropdown())
 end, { desc = "[S]earch by [G]rep" })
 nnoremap("<leader>/", function()
   require("telescope.builtin").current_buffer_fuzzy_find(
-    require("telescope.themes").get_dropdown({ previewer = false, winblend = 100 })
+    require("telescope.themes").get_dropdown({ previewer = false })
   )
 end, { desc = "[/] Fuzzily search in current buffer]" })
 
