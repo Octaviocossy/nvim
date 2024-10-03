@@ -82,9 +82,6 @@ M.map_lsp_keybinds = function(buffer_number)
   nnoremap("td", vim.lsp.buf.type_definition, { desc = "LSP: [T]ype [D]efinition", buffer = buffer_number })
 end
 
--- Symbol Outline keybind
-nnoremap("<leader>so", ":SymbolsOutline<cr>")
-
 -- Spectre
 -- Open for global find/replace
 nnoremap("<leader>S", function()
