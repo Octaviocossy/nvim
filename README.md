@@ -70,8 +70,10 @@
 | `]d`           | Go to next diagnostic.                                |
 | `d]`           | Go to previous diagnostic.                            |
 | `<space>d`     | Open the diagnostic under the cursor in flaot window. |
-| `zR`           | Open all folds.                                       |
-| `zM`           | Close all folds.                                      |
+| `zr`           | Open all folds.                                       |
+| `zm`           | Close all folds.                                      |
+| `zo`           | Open current fold.                                    |
+| `zc`           | Close current fold.                                   |
 | `<space>gs`    | Open DiffView.                                        |
 | `<space>no`    | Turn off highlighted results.                         |
 | `te`           | Create new tab.                                       |

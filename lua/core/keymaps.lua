@@ -165,11 +165,14 @@ nnoremap("<leader>d", function()
 end)
 
 -- nvim-ufo keybinds
-nnoremap("zR", function()
+nnoremap("zr", function()
   require("ufo").openAllFolds()
 end)
-nnoremap("zM", function()
-  require("ufo").closeAllFolds()
+nnoremap("zm", function()
+  require("ufo").closeFoldsWith()
+end)
+nnoremap("zn", function()
+  require("ufo").peekFoldedLinesUnderCursor()
 end)
 
 -- Git keymaps --
