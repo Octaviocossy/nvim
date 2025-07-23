@@ -31,7 +31,6 @@
 - [dressing](https://github.com/stevearc/dressing.nvim) -  Improve the default vim.ui interfaces.
 - [tsc](https://github.com/dmmulroy/tsc.nvim) - Seamless, asynchronous project-wide TypeScript type-checking.
 - [vim-illuminate](https://github.com/RRethy/vim-illuminate) - Automatically highlighting other uses of the word under the cursor.
-- [wilder](https://github.com/gelguy/wilder.nvim) - A more adventurous wildmenu.
 - [mini-ident-scope](https://github.com/echasnovski/mini.indentscope) - Plugin to visualize and operate on indent scope.
 - [comment](https://github.com/numToStr/Comment.nvim) -  Smart and powerful comment plugin for neovim.
 - [fidget](https://github.com/j-hui/fidget.nvim) - Extensible UI for Neovim notifications and LSP progress messages..
