@@ -181,27 +181,23 @@ return {
       })
     end,
   },
-  -- {
-  --   "jose-elias-alvarez/null-ls.nvim",
-  --   config = function()
-  --     local null_ls_status_ok, null_ls = pcall(require, "null-ls")
-
-  --     if not null_ls_status_ok then
-  --       return
-  --     end
-
-  --     local formatting = null_ls.builtins.formatting
-  --     local diagnostics = null_ls.builtins.diagnostics
-
-  --     null_ls.setup({
-  --       debug = false,
-  --       sources = {
-  --         formatting.prettier,
-  --         formatting.eslint_d,
-  --         formatting.stylua,
-  --         diagnostics.eslint_d,
-  --       },
-  --     })
-  --   end,
-  -- },
+  {
+    "stevearc/conform.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      require("conform").setup({
+        formatters_by_ft = {
+          lua = { "stylua" },
+          javascript = { "prettierd", "prettier" },
+          typescript = { "prettierd", "prettier" },
+          html = { "prettierd", "prettier" },
+          css = { "prettierd", "prettier" },
+          prisma = { "prettierd", "prettier" },
+        },
+        vim.api.nvim_create_user_command("Format", function(args)
+          require("conform").format({ async = true, lsp_fallback = true })
+        end, { desc = "Format buffer" }),
+      })
+    end,
+  },
 }
