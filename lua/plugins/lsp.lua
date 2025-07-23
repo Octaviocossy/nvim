@@ -188,11 +188,11 @@ return {
       require("conform").setup({
         formatters_by_ft = {
           lua = { "stylua" },
-          javascript = { "prettierd", "prettier" },
-          typescript = { "prettierd", "prettier" },
-          html = { "prettierd", "prettier" },
-          css = { "prettierd", "prettier" },
-          prisma = { "prettierd", "prettier" },
+          javascript = { "prettier" },
+          typescript = { "prettier" },
+          html = { "prettier" },
+          css = { "prettier" },
+          prisma = { "prettier" },
         },
         vim.api.nvim_create_user_command("Format", function(args)
           require("conform").format({ async = true, lsp_fallback = true })
