@@ -1,6 +1,6 @@
 # Dependencies
 
-**_Neovim:_** `npm install neovim` <br/>
+**_Neovim:_** `brew install --HEAD neovim` <br/>
 **_Eslint:_** `npm install -g eslint_d` <br/>
 **_Prettier:_** `npm install -g prettier` <br/>
 **_Stylua:_** `brew install -g stylua` <br/>
