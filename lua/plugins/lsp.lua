@@ -224,7 +224,7 @@ return {
 					border = "rounded",
 					focusable = false,
 					style = "minimal",
-					source = "always",
+					source = true,
 					header = "",
 					prefix = "",
 				},
@@ -244,45 +244,50 @@ return {
 		"stevearc/conform.nvim",
 		event = { "BufWritePre" },
 		cmd = { "ConformInfo" },
-		opts = {
-			formatters_by_ft = {
-				javascript = { "prettier", "eslint_d" },
-				javascriptreact = { "prettier", "eslint_d" },
-				typescript = { "prettier", "eslint_d" },
-				typescriptreact = { "prettier", "eslint_d" },
-				vue = { "prettier", "eslint_d" },
-				css = { "prettier" },
-				scss = { "prettier" },
-				less = { "prettier" },
-				html = { "prettier" },
-				json = { "prettier" },
-				jsonc = { "prettier" },
-				yaml = { "prettier" },
-				markdown = { "prettier" },
-				graphql = { "prettier" },
-				handlebars = { "prettier" },
-				lua = { "stylua" },
-				python = { "isort", "black" },
-				rust = { "rustfmt" },
-				go = { "goimports", "gofmt" },
-			},
-			formatters = {
-				eslint_d = {
-					condition = function(ctx)
-						return vim.fs.find({
-							".eslintrc.js",
-							".eslintrc.cjs",
-							".eslintrc.yaml",
-							".eslintrc.yml",
-							".eslintrc.json",
-							"eslint.config.js",
-							"eslint.config.mjs",
-							"eslint.config.cjs",
-						}, { path = ctx.filename, upward = true })[1]
-					end,
+		config = function()
+			local eslint_files = {
+				".eslintrc.js",
+				".eslintrc.cjs",
+				".eslintrc.yaml",
+				".eslintrc.yml",
+				".eslintrc.json",
+				"eslint.config.js",
+				"eslint.config.mjs",
+				"eslint.config.cjs",
+			}
+
+			local function get_js_formatters(bufnr)
+				if vim.fs.find(eslint_files, { path = vim.api.nvim_buf_get_name(bufnr), upward = true })[1] then
+					return { "eslint_d" }
+				else
+					return { "prettier" }
+				end
+			end
+
+			require("conform").setup({
+				formatters_by_ft = {
+					javascript = get_js_formatters,
+					javascriptreact = get_js_formatters,
+					typescript = get_js_formatters,
+					typescriptreact = get_js_formatters,
+					vue = get_js_formatters,
+					css = { "prettier" },
+					scss = { "prettier" },
+					less = { "prettier" },
+					html = { "prettier" },
+					json = { "prettier" },
+					jsonc = { "prettier" },
+					yaml = { "prettier" },
+					markdown = { "prettier" },
+					graphql = { "prettier" },
+					handlebars = { "prettier" },
+					lua = { "stylua" },
+					python = { "isort", "black" },
+					rust = { "rustfmt" },
+					go = { "goimports", "gofmt" },
 				},
-			},
-		},
+			})
+		end,
 	},
 	{
 		"folke/trouble.nvim",
