@@ -21,7 +21,7 @@ nnoremap("<leader>q", "<cmd>q!<cr>", { silent = false })
 
 -- Oil
 nnoremap("<leader>o", function()
-  require("oil").toggle_float()
+	require("oil").toggle_float()
 end)
 
 -- NeoTree
@@ -29,68 +29,68 @@ nnoremap("<leader>e", "<cmd>Neotree reveal<cr>", { silent = false })
 
 -- Telescope
 nnoremap("<leader>sf", function()
-  require("telescope.builtin").find_files(require("telescope.themes").get_dropdown())
+	require("telescope.builtin").find_files(require("telescope.themes").get_dropdown())
 end, { desc = "[S]earch [F]iles" })
 nnoremap("<leader>sg", function()
-  require("telescope.builtin").live_grep(require("telescope.themes").get_dropdown())
+	require("telescope.builtin").live_grep(require("telescope.themes").get_dropdown())
 end, { desc = "[S]earch by [G]rep" })
 nnoremap("<leader>/", function()
-  require("telescope.builtin").current_buffer_fuzzy_find(
-    require("telescope.themes").get_dropdown({ previewer = false })
-  )
+	require("telescope.builtin").current_buffer_fuzzy_find(
+		require("telescope.themes").get_dropdown({ previewer = false })
+	)
 end, { desc = "[/] Fuzzily search in current buffer]" })
 
 -- LSP
 M.map_lsp_keybinds = function(buffer_number)
-  nnoremap("<leader>rn", vim.lsp.buf.rename, { desc = "LSP: [R]e[n]ame", buffer = buffer_number })
-  nnoremap("<leader>ca", vim.lsp.buf.code_action, { desc = "LSP: [C]ode [A]ction", buffer = buffer_number })
+	nnoremap("<leader>rn", vim.lsp.buf.rename, { desc = "LSP: [R]e[n]ame", buffer = buffer_number })
+	nnoremap("<leader>ca", vim.lsp.buf.code_action, { desc = "LSP: [C]ode [A]ction", buffer = buffer_number })
 
-  nnoremap("gd", vim.lsp.buf.definition, { desc = "LSP: [G]oto [D]efinition", buffer = buffer_number })
+	nnoremap("gd", vim.lsp.buf.definition, { desc = "LSP: [G]oto [D]efinition", buffer = buffer_number })
 
-  -- Telescope LSP keybinds --
-  nnoremap(
-    "gr",
-    require("telescope.builtin").lsp_references,
-    { desc = "LSP: [G]oto [R]eferences", buffer = buffer_number }
-  )
+	-- Telescope LSP keybinds --
+	nnoremap(
+		"gr",
+		require("telescope.builtin").lsp_references,
+		{ desc = "LSP: [G]oto [R]eferences", buffer = buffer_number }
+	)
 
-  nnoremap(
-    "gi",
-    require("telescope.builtin").lsp_implementations,
-    { desc = "LSP: [G]oto [I]mplementation", buffer = buffer_number }
-  )
+	nnoremap(
+		"gi",
+		require("telescope.builtin").lsp_implementations,
+		{ desc = "LSP: [G]oto [I]mplementation", buffer = buffer_number }
+	)
 
-  nnoremap(
-    "<leader>bs",
-    require("telescope.builtin").lsp_document_symbols,
-    { desc = "LSP: [B]uffer [S]ymbols", buffer = buffer_number }
-  )
+	nnoremap(
+		"<leader>bs",
+		require("telescope.builtin").lsp_document_symbols,
+		{ desc = "LSP: [B]uffer [S]ymbols", buffer = buffer_number }
+	)
 
-  nnoremap(
-    "<leader>ps",
-    require("telescope.builtin").lsp_workspace_symbols,
-    { desc = "LSP: [P]roject [S]ymbols", buffer = buffer_number }
-  )
+	nnoremap(
+		"<leader>ps",
+		require("telescope.builtin").lsp_workspace_symbols,
+		{ desc = "LSP: [P]roject [S]ymbols", buffer = buffer_number }
+	)
 
-  -- See `:help K` for why this keymap
-  nnoremap("K", vim.lsp.buf.hover, { desc = "LSP: Hover Documentation", buffer = buffer_number })
-  nnoremap("<leader>k", vim.lsp.buf.signature_help, { desc = "LSP: Signature Documentation", buffer = buffer_number })
-  inoremap("<C-k>", vim.lsp.buf.signature_help, { desc = "LSP: Signature Documentation", buffer = buffer_number })
+	-- See `:help K` for why this keymap
+	nnoremap("K", vim.lsp.buf.hover, { desc = "LSP: Hover Documentation", buffer = buffer_number })
+	nnoremap("<leader>k", vim.lsp.buf.signature_help, { desc = "LSP: Signature Documentation", buffer = buffer_number })
+	inoremap("<C-k>", vim.lsp.buf.signature_help, { desc = "LSP: Signature Documentation", buffer = buffer_number })
 
-  -- Lesser used LSP functionality
-  nnoremap("gD", vim.lsp.buf.declaration, { desc = "LSP: [G]oto [D]eclaration", buffer = buffer_number })
-  nnoremap("td", vim.lsp.buf.type_definition, { desc = "LSP: [T]ype [D]efinition", buffer = buffer_number })
+	-- Lesser used LSP functionality
+	nnoremap("gD", vim.lsp.buf.declaration, { desc = "LSP: [G]oto [D]eclaration", buffer = buffer_number })
+	nnoremap("td", vim.lsp.buf.type_definition, { desc = "LSP: [T]ype [D]efinition", buffer = buffer_number })
 end
 
 -- Spectre
 -- Open for global find/replace
 nnoremap("<leader>S", function()
-  require("spectre").toggle()
+	require("spectre").toggle()
 end)
 
 -- Open for global find/replace for the word under the cursor in normal mode
 nnoremap("<leader>sw", function()
-  require("spectre").open_visual({ select_word = true })
+	require("spectre").open_visual({ select_word = true })
 end, { desc = "Search current word" })
 
 -- Split windows
@@ -99,80 +99,99 @@ nnoremap("<leader>v", "<cmd>vsplit<cr><C-w>w")
 
 -- Move through the windows
 nnoremap("<C-h>", function()
-  require("nvim-tmux-navigation").NvimTmuxNavigateLeft()
+	require("nvim-tmux-navigation").NvimTmuxNavigateLeft()
 end, { desc = "Move to left panel" })
 
 nnoremap("<C-j>", function()
-  require("nvim-tmux-navigation").NvimTmuxNavigateDown()
+	require("nvim-tmux-navigation").NvimTmuxNavigateDown()
 end, { desc = "Move to down panel" })
 
 nnoremap("<C-k>", function()
-  require("nvim-tmux-navigation").NvimTmuxNavigateUp()
+	require("nvim-tmux-navigation").NvimTmuxNavigateUp()
 end, { desc = "Move to up panel" })
 
 nnoremap("<C-l>", function()
-  require("nvim-tmux-navigation").NvimTmuxNavigateRight()
+	require("nvim-tmux-navigation").NvimTmuxNavigateRight()
 end, { desc = "Move to right panel" })
 
 -- Press leader f to format
 nnoremap("<leader>f", function()
-  vim.lsp.buf.format({ timeout_ms = 5000 })
-end, { desc = "Format the current buffer" })
-
--- Diagnostics
+	require("conform").format({
+		lsp_fallback = true,
+		async = false,
+		timeout_ms = 1000,
+	})
+end, { desc = "Format file or range (in visual mode)" })
 
 -- Goto next diagnostic of any severity
 nnoremap("]d", function()
-  vim.diagnostic.goto_next({})
-  vim.api.nvim_feedkeys("zz", "n", false)
+	vim.diagnostic.goto_next({})
+	vim.api.nvim_feedkeys("zz", "n", false)
 end)
 
 -- Goto previous diagnostic of any severity
 nnoremap("[d", function()
-  vim.diagnostic.goto_prev({})
-  vim.api.nvim_feedkeys("zz", "n", false)
+	vim.diagnostic.goto_prev({})
+	vim.api.nvim_feedkeys("zz", "n", false)
 end)
 
 -- Goto next error diagnostic
 nnoremap("]e", function()
-  vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
-  vim.api.nvim_feedkeys("zz", "n", false)
+	vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
+	vim.api.nvim_feedkeys("zz", "n", false)
 end)
 
 -- Goto previous error diagnostic
 nnoremap("[e", function()
-  vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })
-  vim.api.nvim_feedkeys("zz", "n", false)
+	vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR })
+	vim.api.nvim_feedkeys("zz", "n", false)
 end)
 
 -- Goto next warning diagnostic
 nnoremap("]w", function()
-  vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN })
-  vim.api.nvim_feedkeys("zz", "n", false)
+	vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN })
+	vim.api.nvim_feedkeys("zz", "n", false)
 end)
 
 -- Goto previous warning diagnostic
 nnoremap("[w", function()
-  vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARN })
-  vim.api.nvim_feedkeys("zz", "n", false)
+	vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARN })
+	vim.api.nvim_feedkeys("zz", "n", false)
 end)
 
 -- Open the diagnostic under the cursor in a float window
 nnoremap("<leader>d", function()
-  vim.diagnostic.open_float({
-    border = "rounded",
-  })
+	vim.diagnostic.open_float({
+		border = "rounded",
+	})
 end)
+
+-- Open trouble diagnostic window
+nnoremap("<leader>td", function()
+	require("trouble").toggle("document_diagnostics")
+end, { desc = "Toggle document diagnostics" })
+
+nnoremap("<leader>tw", function()
+	require("trouble").toggle("workspace_diagnostics")
+end, { desc = "Toggle workspace diagnostics" })
+
+nnoremap("<leader>tq", function()
+	require("trouble").toggle("quickfix")
+end, { desc = "Toggle quickfix list" })
+
+nnoremap("<leader>tl", function()
+	require("trouble").toggle("loclist")
+end, { desc = "Toggle location list" })
 
 -- nvim-ufo keybinds
 nnoremap("zr", function()
-  require("ufo").openAllFolds()
+	require("ufo").openAllFolds()
 end)
 nnoremap("zm", function()
-  require("ufo").closeFoldsWith()
+	require("ufo").closeFoldsWith()
 end)
 nnoremap("zn", function()
-  require("ufo").peekFoldedLinesUnderCursor()
+	require("ufo").peekFoldedLinesUnderCursor()
 end)
 
 -- Git keymaps --

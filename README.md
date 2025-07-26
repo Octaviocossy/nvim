@@ -39,6 +39,7 @@
 - [bufferline](https://github.com/akinsho/bufferline.nvim) - A snazzy bufferline for Neovim.
 - [null-ls](https://github.com/jose-elias-alvarez/null-ls.nvim) - Inject LSP diagnostics.
 - [navic](https://github.com/SmiteshP/nvim-navic) - Statusline plugin that shows your current code context.
+- [trouble](https://github.com/folke/trouble.nvim) - A beautiful diagnostics, references, telescope results, quickfix and location list.
 
 # Keymaps
 
@@ -67,8 +68,16 @@
 | `<space>v`     | Screen vertical split.                                |
 | `<space>f`     | Format document.                                      |
 | `]d`           | Go to next diagnostic.                                |
-| `d]`           | Go to previous diagnostic.                            |
-| `<space>d`     | Open the diagnostic under the cursor in flaot window. |
+| `[d`           | Go to previous diagnostic.                            |
+| `]e`           | Go to next error diagnostic.                          |
+| `[e`           | Go to previous error diagnostic.                      |
+| `]w`           | Go to next warning diagnostic.                        |
+| `[w`           | Go to previous warning diagnostic.                    |
+| `<space>d`     | Open the diagnostic under the cursor in float window. |
+| `<space>td`    | Toggle document diagnostics window (Trouble).        |
+| `<space>tw`    | Toggle workspace diagnostics window (Trouble).       |
+| `<space>tq`    | Toggle quickfix list (Trouble).                      |
+| `<space>tl`    | Toggle location list (Trouble).                      |
 | `zr`           | Open all folds.                                       |
 | `zm`           | Close all folds.                                      |
 | `zo`           | Open current fold.                                    |
@@ -120,6 +129,5 @@
         ├── treesitter.lua
         ├── tsc.lua
         ├── ufo.lua
-        ├── vim_illuminate.lua
-        └── wilder.lua
+        └── vim_illuminate.lua
 ```
