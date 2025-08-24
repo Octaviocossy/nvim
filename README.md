@@ -29,7 +29,6 @@
 - [symbols-outline](https://github.com/simrat39/symbols-outline.nvim) - A tree like view for symbols in Neovim.
 - [nvim-ufo](https://github.com/kevinhwang91/nvim-ufo) -  Make Neovim's fold look modern and keep high performance.
 - [dressing](https://github.com/stevearc/dressing.nvim) -  Improve the default vim.ui interfaces.
-- [tsc](https://github.com/dmmulroy/tsc.nvim) - Seamless, asynchronous project-wide TypeScript type-checking.
 - [vim-illuminate](https://github.com/RRethy/vim-illuminate) - Automatically highlighting other uses of the word under the cursor.
 - [mini-ident-scope](https://github.com/echasnovski/mini.indentscope) - Plugin to visualize and operate on indent scope.
 - [comment](https://github.com/numToStr/Comment.nvim) -  Smart and powerful comment plugin for neovim.
@@ -37,7 +36,7 @@
 - [NeoTree](https://github.com/nvim-neo-tree/neo-tree.nvim) - Neovim plugin to manage the file system and other tree like structures.
 - [diffview](https://github.com/sindrets/diffview.nvim) - Single tabpage interface for easily cycling through diffs.
 - [bufferline](https://github.com/akinsho/bufferline.nvim) - A snazzy bufferline for Neovim.
-- [null-ls](https://github.com/jose-elias-alvarez/null-ls.nvim) - Inject LSP diagnostics.
+- [conform](https://github.com/stevearc/conform.nvim) - A lightweight yet powerful formatter plugin for Neovim.
 - [navic](https://github.com/SmiteshP/nvim-navic) - Statusline plugin that shows your current code context.
 - [trouble](https://github.com/folke/trouble.nvim) - A beautiful diagnostics, references, telescope results, quickfix and location list.
 
@@ -127,7 +126,6 @@
         ├── telescope.lua
         ├── tmux_navigator.lua
         ├── treesitter.lua
-        ├── tsc.lua
         ├── ufo.lua
         └── vim_illuminate.lua
 ```
