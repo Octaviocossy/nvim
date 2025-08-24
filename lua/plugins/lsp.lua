@@ -24,7 +24,7 @@ return {
 				"The signature '(data: string): string' of 'btoa' is deprecated.",
 			}
 
-			local function tsserver_on_publish_diagnostics_override(_, result, ctx, config)
+			local function tsserver_on_publish_diagnostics_override(_, result, ctx)
 				local filtered_diagnostics = {}
 
 				for _, diagnostic in ipairs(result.diagnostics) do
@@ -42,7 +42,7 @@ return {
 
 				result.diagnostics = filtered_diagnostics
 
-				vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx, config)
+				vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx)
 			end
 
 			-- Default handlers for LSP
@@ -56,10 +56,9 @@ return {
 			local on_attach = function(_client, buffer_number)
 				-- Pass the current buffer to map lsp keybinds
 				--
-				if _client.supports_method("textDocument/documentSymbol") then
+				if _client.server_capabilities.documentSymbolProvider then
 					require("nvim-navic").attach(_client, buffer_number)
 				end
-
 				map_lsp_keybinds(buffer_number)
 			end
 
