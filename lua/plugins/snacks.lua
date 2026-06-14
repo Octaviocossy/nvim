@@ -28,6 +28,9 @@ return {
 					explorer = {
 						-- show the file explorer on the right
 						layout = { layout = { position = "right" } },
+						-- show dotfiles and gitignored files by default (toggle with `.` / `i`)
+						hidden = true,
+						ignored = true,
 					},
 				},
 			},
