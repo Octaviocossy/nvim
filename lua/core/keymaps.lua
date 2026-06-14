@@ -10,7 +10,7 @@ nnoremap("<space>", "<nop>")
 nnoremap("<leader>db", '<Esc>:%bdelete|edit #|normal`"<Return>', { desc = "Delete other buffers but the current one" })
 
 -- Restart LSP
-nnoremap("<leader>lr", "<cmd>LspRestart<cr>", { desc = "Restart LSP" })
+nnoremap("<leader>lr", "<cmd>lsp restart<cr>", { desc = "Restart LSP" })
 
 -- Save with leader key
 nnoremap("<leader>w", "<cmd>w!<cr>", { silent = false })
@@ -19,7 +19,7 @@ nnoremap("<leader>w", "<cmd>w!<cr>", { silent = false })
 nnoremap("<leader>q", "<cmd>q!<cr>", { silent = false })
 
 -- File explorer (snacks)
-nnoremap("<leader>o", function()
+nnoremap("<leader>e", function()
   Snacks.explorer()
 end, { desc = "File explorer" })
 

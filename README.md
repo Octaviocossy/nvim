@@ -88,7 +88,7 @@ First launch installs the plugins (lazy.nvim) and tools (mason) — restart Neov
 
 | Key          | Action                              |
 | ------------ | ----------------------------------- |
-| `<leader>o`  | Open file explorer                  |
+| `<leader>e`  | Open file explorer                  |
 | `<leader>sf` | Find files                          |
 | `<leader>sg` | Live grep                           |
 | `<leader>/`  | Fuzzy-find in current buffer        |
