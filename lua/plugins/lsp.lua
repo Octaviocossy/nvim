@@ -1,7 +1,9 @@
 return {
 	{
 		"neovim/nvim-lspconfig",
-		event = { "BufReadPost", "BufNewFile" },
+		-- Load on FileType (not BufReadPost): lazy re-emits the FileType event after
+		-- loading, so vim.lsp.enable's autocmd attaches to the triggering buffer.
+		event = { "FileType" },
 		cmd = { "LspInfo", "LspInstall", "LspUninstall", "Mason" },
 		dependencies = {
 			-- Install and manage LSP servers / tools
@@ -138,14 +140,19 @@ return {
 
 			vim.lsp.enable(vim.tbl_keys(servers))
 
-			-- nvim-lspconfig lazy-loads on BufReadPost, so the buffer that triggered the
-			-- load already fired FileType *before* vim.lsp.enable registered its autocmd.
-			-- Re-emit FileType for loaded buffers so servers attach without a reload.
-			for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-				if vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].buftype == "" then
-					vim.api.nvim_exec_autocmds("FileType", { buffer = buf, modeline = false })
+			-- Backup: if a normal buffer is already open when lspconfig loads, re-emit
+			-- FileType (deferred, clean context) so its server attaches without a reload.
+			vim.schedule(function()
+				for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+					if
+						vim.api.nvim_buf_is_loaded(buf)
+						and vim.bo[buf].buftype == ""
+						and vim.bo[buf].filetype ~= ""
+					then
+						vim.api.nvim_exec_autocmds("FileType", { buffer = buf, modeline = false })
+					end
 				end
-			end
+			end)
 
 			-- Diagnostics UI
 			vim.diagnostic.config({
