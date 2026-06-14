@@ -24,6 +24,12 @@ return {
 			picker = {
 				enabled = true,
 				ui_select = true, -- route vim.ui.select through the picker
+				sources = {
+					explorer = {
+						-- show the file explorer on the right
+						layout = { layout = { position = "right" } },
+					},
+				},
 			},
 			-- Highlight references of the word under the cursor (replaces vim-illuminate)
 			words = { enabled = true },
