@@ -30,8 +30,8 @@ return {
 						return
 					end
 
-					-- Formatting is handled by conform, not the eslint LSP
-					if client.name == "eslint" then
+					-- Formatting is handled by conform, not the eslint/biome LSP
+					if client.name == "eslint" or client.name == "biome" then
 						client.server_capabilities.documentFormattingProvider = false
 						client.server_capabilities.documentRangeFormattingProvider = false
 					end
@@ -61,6 +61,9 @@ return {
 				cssls = {},
 				html = {},
 				prismals = {},
+				-- Lint + code actions for JS/TS/JSON/CSS. Auto-attaches only when
+				-- the project has a biome.json/biome.jsonc; formatting is left to conform.
+				biome = {},
 				lua_ls = {
 					settings = {
 						Lua = {
@@ -169,6 +172,7 @@ return {
 		event = { "BufWritePre" },
 		cmd = { "ConformInfo" },
 		config = function()
+			local biome_files = { "biome.json", "biome.jsonc" }
 			local eslint_files = {
 				".eslintrc.js",
 				".eslintrc.cjs",
@@ -180,27 +184,44 @@ return {
 				"eslint.config.cjs",
 			}
 
-			local function get_js_formatters(bufnr)
-				if vim.fs.find(eslint_files, { path = vim.api.nvim_buf_get_name(bufnr), upward = true })[1] then
+			local function root_has(bufnr, files)
+				return vim.fs.find(files, { path = vim.api.nvim_buf_get_name(bufnr), upward = true })[1] ~= nil
+			end
+
+			-- JS/TS: prefer Biome, then ESLint, else Prettier
+			local function js_formatters(bufnr)
+				if root_has(bufnr, biome_files) then
+					return { "biome-check" }
+				elseif root_has(bufnr, eslint_files) then
 					return { "eslint_d" }
 				else
 					return { "prettier" }
 				end
 			end
 
+			-- Vue: Biome's single-file-component support is partial, so keep ESLint/Prettier
+			local function eslint_or_prettier(bufnr)
+				return root_has(bufnr, eslint_files) and { "eslint_d" } or { "prettier" }
+			end
+
+			-- JSON / CSS: Biome when present, else Prettier
+			local function biome_or_prettier(bufnr)
+				return root_has(bufnr, biome_files) and { "biome-check" } or { "prettier" }
+			end
+
 			require("conform").setup({
 				formatters_by_ft = {
-					javascript = get_js_formatters,
-					javascriptreact = get_js_formatters,
-					typescript = get_js_formatters,
-					typescriptreact = get_js_formatters,
-					vue = get_js_formatters,
-					css = { "prettier" },
+					javascript = js_formatters,
+					javascriptreact = js_formatters,
+					typescript = js_formatters,
+					typescriptreact = js_formatters,
+					vue = eslint_or_prettier,
+					css = biome_or_prettier,
 					scss = { "prettier" },
 					less = { "prettier" },
 					html = { "prettier" },
-					json = { "prettier" },
-					jsonc = { "prettier" },
+					json = biome_or_prettier,
+					jsonc = biome_or_prettier,
 					yaml = { "prettier" },
 					markdown = { "prettier" },
 					graphql = { "prettier" },

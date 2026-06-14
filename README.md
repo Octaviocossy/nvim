@@ -5,8 +5,11 @@
 **_tree-sitter CLI:_** `npm install -g tree-sitter-cli` — required by nvim-treesitter (main branch) to build parsers. <br/>
 **_C compiler:_** `xcode-select --install` (macOS) — used by the tree-sitter CLI to compile parsers. <br/>
 
-LSP servers and formatters (prettier, eslint_d, stylua, black, isort, rustfmt, goimports) are installed
-automatically via [mason](https://github.com/mason-org/mason.nvim) on first launch.
+LSP servers (including **biome**) and formatters (prettier, eslint_d, stylua, black, isort, rustfmt,
+goimports) are installed automatically via [mason](https://github.com/mason-org/mason.nvim) on first
+launch. JS/TS/JSON/CSS tooling is project-aware: **Biome** is used when a `biome.json` is present
+(formatting via conform, linting/code-actions via the Biome LSP), otherwise it falls back to
+ESLint/Prettier.
 
 ## WSL dependencies:
 
