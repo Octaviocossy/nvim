@@ -3,10 +3,6 @@ return {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
     config = function()
-      local function copilot()
-        return "" .. require("copilot.api").status.data.message or ""
-      end
-
       local function navic()
         if require("nvim-navic").is_available() then
           return " " .. require("nvim-navic").get_location()
@@ -49,7 +45,7 @@ return {
             "diagnostics",
           },
           lualine_c = { "filename", { navic } },
-          lualine_x = { "encoding", { copilot }, "fileformat", "filetype" },
+          lualine_x = { "encoding", "fileformat", "filetype" },
           lualine_y = { "progress" },
           lualine_z = { "location" },
         },

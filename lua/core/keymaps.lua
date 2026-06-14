@@ -1,6 +1,5 @@
 local nnoremap = require("core.utils").keymap_nnoremap
 local _nnoremap = require("core.utils").keymap_nmap
-local inoremap = require("core.utils").keymap_inoremap
 
 local M = {}
 
@@ -24,20 +23,15 @@ nnoremap("<leader>o", function()
 	require("oil").toggle_float()
 end)
 
--- NeoTree
-nnoremap("<leader>e", "<cmd>Neotree reveal<cr>", { silent = false })
-
--- Telescope
+-- Picker (snacks)
 nnoremap("<leader>sf", function()
-	require("telescope.builtin").find_files(require("telescope.themes").get_dropdown())
+	Snacks.picker.files()
 end, { desc = "[S]earch [F]iles" })
 nnoremap("<leader>sg", function()
-	require("telescope.builtin").live_grep(require("telescope.themes").get_dropdown())
+	Snacks.picker.grep()
 end, { desc = "[S]earch by [G]rep" })
 nnoremap("<leader>/", function()
-	require("telescope.builtin").current_buffer_fuzzy_find(
-		require("telescope.themes").get_dropdown({ previewer = false })
-	)
+	Snacks.picker.lines()
 end, { desc = "[/] Fuzzily search in current buffer]" })
 
 -- LSP
@@ -47,35 +41,30 @@ M.map_lsp_keybinds = function(buffer_number)
 
 	nnoremap("gd", vim.lsp.buf.definition, { desc = "LSP: [G]oto [D]efinition", buffer = buffer_number })
 
-	-- Telescope LSP keybinds --
-	nnoremap(
-		"gr",
-		require("telescope.builtin").lsp_references,
-		{ desc = "LSP: [G]oto [R]eferences", buffer = buffer_number }
-	)
+	-- Picker (snacks) LSP keybinds --
+	nnoremap("gr", function()
+		Snacks.picker.lsp_references()
+	end, { desc = "LSP: [G]oto [R]eferences", buffer = buffer_number })
 
-	nnoremap(
-		"gi",
-		require("telescope.builtin").lsp_implementations,
-		{ desc = "LSP: [G]oto [I]mplementation", buffer = buffer_number }
-	)
+	nnoremap("gi", function()
+		Snacks.picker.lsp_implementations()
+	end, { desc = "LSP: [G]oto [I]mplementation", buffer = buffer_number })
 
-	nnoremap(
-		"<leader>bs",
-		require("telescope.builtin").lsp_document_symbols,
-		{ desc = "LSP: [B]uffer [S]ymbols", buffer = buffer_number }
-	)
+	nnoremap("<leader>bs", function()
+		Snacks.picker.lsp_symbols()
+	end, { desc = "LSP: [B]uffer [S]ymbols", buffer = buffer_number })
 
-	nnoremap(
-		"<leader>ps",
-		require("telescope.builtin").lsp_workspace_symbols,
-		{ desc = "LSP: [P]roject [S]ymbols", buffer = buffer_number }
-	)
+	nnoremap("<leader>ps", function()
+		Snacks.picker.lsp_workspace_symbols()
+	end, { desc = "LSP: [P]roject [S]ymbols", buffer = buffer_number })
 
 	-- See `:help K` for why this keymap
-	nnoremap("K", vim.lsp.buf.hover, { desc = "LSP: Hover Documentation", buffer = buffer_number })
-	nnoremap("<leader>k", vim.lsp.buf.signature_help, { desc = "LSP: Signature Documentation", buffer = buffer_number })
-	inoremap("<C-k>", vim.lsp.buf.signature_help, { desc = "LSP: Signature Documentation", buffer = buffer_number })
+	nnoremap("K", function()
+		vim.lsp.buf.hover({ border = "rounded" })
+	end, { desc = "LSP: Hover Documentation", buffer = buffer_number })
+	nnoremap("<leader>k", function()
+		vim.lsp.buf.signature_help({ border = "rounded" })
+	end, { desc = "LSP: Signature Documentation", buffer = buffer_number })
 
 	-- Lesser used LSP functionality
 	nnoremap("gD", vim.lsp.buf.declaration, { desc = "LSP: [G]oto [D]eclaration", buffer = buffer_number })
@@ -166,36 +155,31 @@ nnoremap("<leader>d", function()
 	})
 end)
 
--- Open trouble diagnostic window
+-- Trouble diagnostics / lists
 nnoremap("<leader>td", function()
-	require("trouble").toggle("document_diagnostics")
+	require("trouble").toggle({ mode = "diagnostics", filter = { buf = 0 } })
 end, { desc = "Toggle document diagnostics" })
 
 nnoremap("<leader>tw", function()
-	require("trouble").toggle("workspace_diagnostics")
+	require("trouble").toggle({ mode = "diagnostics" })
 end, { desc = "Toggle workspace diagnostics" })
 
 nnoremap("<leader>tq", function()
-	require("trouble").toggle("quickfix")
+	require("trouble").toggle({ mode = "qflist" })
 end, { desc = "Toggle quickfix list" })
 
 nnoremap("<leader>tl", function()
-	require("trouble").toggle("loclist")
+	require("trouble").toggle({ mode = "loclist" })
 end, { desc = "Toggle location list" })
 
--- nvim-ufo keybinds
-nnoremap("zr", function()
-	require("ufo").openAllFolds()
-end)
-nnoremap("zm", function()
-	require("ufo").closeFoldsWith()
-end)
-nnoremap("zn", function()
-	require("ufo").peekFoldedLinesUnderCursor()
-end)
+-- Folding (native treesitter foldexpr)
+nnoremap("zr", "zR", { desc = "Open all folds" })
+nnoremap("zm", "zM", { desc = "Close all folds" })
 
 -- Git keymaps --
-nnoremap("<leader>gs", ":DiffviewOpen<cr>")
+nnoremap("<leader>gs", function()
+	Snacks.picker.git_status()
+end, { desc = "Git status" })
 
 -- Bufferline
 nnoremap("te", ":tabnew<cr>")

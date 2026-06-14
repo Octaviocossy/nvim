@@ -38,9 +38,9 @@ local options = {
   signcolumn = "yes",
   -- Enable cursor line highlight
   cursorline = true,
-  -- Set fold settings
-  -- These options were reccommended by nvim-ufo
-  -- See: https://github.com/kevinhwang91/nvim-ufo#minimal-configuration
+  -- Folding via native treesitter foldexpr (open all folds by default)
+  foldmethod = "expr",
+  foldexpr = "v:lua.vim.treesitter.foldexpr()",
   foldcolumn = "0",
   foldlevel = 99,
   foldlevelstart = 99,

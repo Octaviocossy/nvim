@@ -1,21 +1,19 @@
 return {
 	{
 		"neovim/nvim-lspconfig",
-		event = { "BufReadPost" },
+		event = { "BufReadPost", "BufNewFile" },
 		cmd = { "LspInfo", "LspInstall", "LspUninstall", "Mason" },
 		dependencies = {
-			-- Plugin(s) and UI to automatically install LSPs to stdpath
-			"williamboman/mason.nvim",
-			"williamboman/mason-lspconfig.nvim",
+			-- Install and manage LSP servers / tools
+			"mason-org/mason.nvim",
+			"mason-org/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 
-			-- Install lsp autocompletions
-			"hrsh7th/cmp-nvim-lsp",
+			-- Completion capabilities
+			"saghen/blink.cmp",
 		},
 		config = function()
-			local map_lsp_keybinds = require("core.keymaps").map_lsp_keybinds -- Has to load keymaps before pluginslsp
-
-			-- Override tsserver diagnostics to filter out specific messages
+			-- ts_ls diagnostics to filter out
 			local messages_to_filter = {
 				"This may be converted to an async function.",
 				"'_Assertion' is declared but never used.",
@@ -24,63 +22,40 @@ return {
 				"The signature '(data: string): string' of 'btoa' is deprecated.",
 			}
 
-			local function tsserver_on_publish_diagnostics_override(_, result, ctx)
-				local filtered_diagnostics = {}
-
-				for _, diagnostic in ipairs(result.diagnostics) do
-					local found = false
-					for _, message in ipairs(messages_to_filter) do
-						if diagnostic.message == message then
-							found = true
-							break
-						end
+			-- Attach navic + buffer-local keymaps whenever a server attaches
+			vim.api.nvim_create_autocmd("LspAttach", {
+				callback = function(event)
+					local client = vim.lsp.get_client_by_id(event.data.client_id)
+					if not client then
+						return
 					end
-					if not found then
-						table.insert(filtered_diagnostics, diagnostic)
+
+					-- Formatting is handled by conform, not the eslint LSP
+					if client.name == "eslint" then
+						client.server_capabilities.documentFormattingProvider = false
+						client.server_capabilities.documentRangeFormattingProvider = false
 					end
-				end
 
-				result.diagnostics = filtered_diagnostics
+					if client.server_capabilities.documentSymbolProvider then
+						require("nvim-navic").attach(client, event.buf)
+					end
 
-				vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx)
-			end
+					require("core.keymaps").map_lsp_keybinds(event.buf)
+				end,
+			})
 
-			-- Default handlers for LSP
-			local default_handlers = {
-				["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
-				["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" }),
-			}
+			-- Broadcast blink.cmp's extra completion capabilities to all servers
+			vim.lsp.config("*", {
+				capabilities = require("blink.cmp").get_lsp_capabilities(),
+			})
 
-			-- Function to run when neovim connects to a Lsp client
-			---@diagnostic disable-next-line: unused-local
-			local on_attach = function(_client, buffer_number)
-				-- Pass the current buffer to map lsp keybinds
-				--
-				if _client.server_capabilities.documentSymbolProvider then
-					require("nvim-navic").attach(_client, buffer_number)
-				end
-				map_lsp_keybinds(buffer_number)
-			end
-
-			-- LSP servers and clients are able to communicate to each other what features they support.
-			--  By default, Neovim doesn't support everything that is in the LSP Specification.
-			--  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
-			--  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
-			local capabilities = vim.lsp.protocol.make_client_capabilities()
-			capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
-
-			-- LSP servers to install (see list here: https://github.com/williamboman/mason-lspconfig.nvim#available-lsp-servers )
-			--  Add any additional override configuration in the following tables. Available keys are:
-			--  - cmd (table): Override the default command used to start the server
-			--  - filetypes (table): Override the default list of associated filetypes for the server
-			--  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
-			--  - settings (table): Override the default settings passed when initializing the server.
-			--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+			-- Per-server overrides, merged on top of nvim-lspconfig's defaults
 			local servers = {
-				-- LSP Servers
 				rust_analyzer = {
-					cargo = {
-						allFeatures = true,
+					settings = {
+						["rust-analyzer"] = {
+							cargo = { allFeatures = true },
+						},
 					},
 				},
 				cssls = {},
@@ -92,8 +67,7 @@ return {
 							runtime = { version = "LuaJIT" },
 							workspace = {
 								checkThirdParty = false,
-								-- Tells lua_ls where to find all the Lua files that you have loaded
-								-- for your neovim configuration.
+								-- Tells lua_ls where to find the Lua files loaded for your config
 								library = {
 									"${3rd}/luv/library",
 									unpack(vim.api.nvim_get_runtime_file("", true)),
@@ -103,7 +77,7 @@ return {
 						},
 					},
 				},
-				eslint_lsp = {
+				eslint = {
 					settings = {
 						codeActionOnSave = {
 							enable = true,
@@ -112,113 +86,70 @@ return {
 						format = { enable = true },
 						packageManager = "npm",
 					},
-					on_attach = function(client, bufnr)
-						-- Deshabilitar formateo de eslint LSP ya que usamos conform
-						client.server_capabilities.documentFormattingProvider = false
-						client.server_capabilities.documentRangeFormattingProvider = false
-					end,
 				},
 				ts_ls = {
 					settings = {
 						maxTsServerMemory = 12288,
 					},
 					handlers = {
-						["textDocument/publishDiagnostics"] = vim.lsp.with(
-							tsserver_on_publish_diagnostics_override,
-							{}
-						),
+						-- Drop a handful of noisy/irrelevant diagnostics
+						["textDocument/publishDiagnostics"] = function(err, result, ctx)
+							if result and result.diagnostics then
+								result.diagnostics = vim.tbl_filter(function(diagnostic)
+									return not vim.tbl_contains(messages_to_filter, diagnostic.message)
+								end, result.diagnostics)
+							end
+							vim.lsp.handlers["textDocument/publishDiagnostics"](err, result, ctx)
+						end,
 					},
 				},
 			}
 
-			local ensure_installed = vim.tbl_keys(vim.tbl_deep_extend("force", {}, servers))
+			for name, config in pairs(servers) do
+				vim.lsp.config(name, config)
+			end
 
+			-- Mason installs the servers above + the formatters used by conform
+			require("mason").setup({
+				ui = { border = "rounded" },
+			})
+			require("mason-lspconfig").setup({
+				ensure_installed = vim.tbl_keys(servers),
+				automatic_enable = false, -- enabled explicitly below
+			})
 			require("mason-tool-installer").setup({
 				auto_update = true,
 				run_on_start = true,
 				start_delay = 3000,
 				debounce_hours = 12,
-				ensure_installed = vim.tbl_extend("force", ensure_installed, {
-					-- Formatters para conform.nvim
+				ensure_installed = {
 					"prettier",
 					"eslint_d",
-					"eslint-lsp",
 					"stylua",
 					"black",
 					"isort",
 					"rustfmt",
 					"goimports",
-				}),
-			})
-
-			-- Iterate over our servers and set them up
-			for name, config in pairs(servers) do
-				require("lspconfig")[name].setup({
-					cmd = config.cmd,
-					capabilities = capabilities,
-					filetypes = config.filetypes,
-					handlers = vim.tbl_deep_extend("force", {}, default_handlers, config.handlers or {}),
-					on_attach = on_attach,
-					settings = config.settings,
-				})
-			end
-
-			-- angularls custom config
-			-- local install_path = vim.fn.stdpath("data") .. "/mason/packages/angular-language-server/node_modules"
-			-- local ang = install_path .. "/@angular/language-server/node_modules"
-			--
-			-- local cmd = {
-			--   "ngserver",
-			--   "--stdio",
-			--   "--tsProbeLocations",
-			--   install_path,
-			--   "--ngProbeLocations",
-			--   ang,
-			-- }
-			--
-			-- require("lspconfig").angularls.setup({
-			--   on_attach = on_attach,
-			--   cmd = cmd,
-			--   on_new_config = function(new_config)
-			--     new_config.cmd = cmd
-			--   end,
-			-- })
-
-			-- Setup mason so it can manage 3rd party LSP servers
-			require("mason").setup({
-				ui = {
-					border = "rounded",
 				},
 			})
 
-			require("mason-lspconfig").setup()
+			vim.lsp.enable(vim.tbl_keys(servers))
 
-			-- Configure borderd for LspInfo ui
-			require("lspconfig.ui.windows").default_options.border = "rounded"
-
-			-- Configure diagnostics with enhanced visualization
+			-- Diagnostics UI
 			vim.diagnostic.config({
-				-- Enable virtual text (diagnostics inline)
 				virtual_text = {
-					enabled = true,
 					spacing = 4,
 					source = "if_many",
 					prefix = "●",
-					severity = {
-						min = vim.diagnostic.severity.HINT,
-					},
 				},
-				-- Configure signs in the sign column
 				signs = {
-					active = true,
-					values = {
-						{ name = "DiagnosticSignError", text = " " },
-						{ name = "DiagnosticSignWarn", text = " " },
-						{ name = "DiagnosticSignHint", text = " " },
-						{ name = "DiagnosticSignInfo", text = " " },
+					text = {
+						[vim.diagnostic.severity.ERROR] = " ",
+						[vim.diagnostic.severity.WARN] = " ",
+						[vim.diagnostic.severity.INFO] = " ",
+						[vim.diagnostic.severity.HINT] = " ",
 					},
 				},
-				-- Configure float window
 				float = {
 					border = "rounded",
 					focusable = false,
@@ -227,15 +158,9 @@ return {
 					header = "",
 					prefix = "",
 				},
-				-- Configure underline
-				underline = {
-					enabled = true,
-					severity = {
-						min = vim.diagnostic.severity.HINT,
-					},
-				},
-				-- Configure update in insert mode
+				underline = true,
 				update_in_insert = false,
+				severity_sort = true,
 			})
 		end,
 	},
@@ -291,11 +216,7 @@ return {
 	{
 		"folke/trouble.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
-		cmd = { "Trouble", "TroubleToggle", "TroubleRefresh" },
-		opts = {
-			-- your configuration comes here
-			-- or leave it empty to use the default settings
-			-- refer to the configuration section below
-		},
+		cmd = { "Trouble" },
+		opts = {},
 	},
 }
