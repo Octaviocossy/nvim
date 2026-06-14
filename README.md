@@ -1,117 +1,175 @@
-# Dependencies
+# Neovim
 
-**_Neovim:_** `brew install neovim` — requires **>= 0.11** (uses native LSP & folding; developed on 0.12). <br/>
-**_ripgrep:_** `brew install ripgrep` — used by the picker's live grep. <br/>
-**_tree-sitter CLI:_** `npm install -g tree-sitter-cli` — required by nvim-treesitter (main branch) to build parsers. <br/>
-**_C compiler:_** `xcode-select --install` (macOS) — used by the tree-sitter CLI to compile parsers. <br/>
+A minimal, modern Neovim configuration for **Neovim ≥ 0.11** — native LSP, Treesitter,
+and a small set of well-integrated plugins managed by
+[lazy.nvim](https://github.com/folke/lazy.nvim). Developed on 0.12.
 
-LSP servers (including **biome**) and formatters (prettier, eslint_d, stylua, black, isort, rustfmt,
-goimports) are installed automatically via [mason](https://github.com/mason-org/mason.nvim) on first
-launch. JS/TS/JSON/CSS tooling is project-aware: **Biome** is used when a `biome.json` is present
-(formatting via conform, linting/code-actions via the Biome LSP), otherwise it falls back to
-ESLint/Prettier.
+## Requirements
 
-## WSL dependencies:
+| Tool              | Install                          | Used for                          |
+| ----------------- | -------------------------------- | --------------------------------- |
+| Neovim ≥ 0.11     | `brew install neovim`            | native LSP, folding, commenting   |
+| ripgrep           | `brew install ripgrep`           | live grep in the picker           |
+| tree-sitter CLI   | `npm install -g tree-sitter-cli` | building Treesitter parsers       |
+| C compiler        | `xcode-select --install`         | compiling parsers                 |
 
-**_GCC:_** `sudo apt install build-essential`
+> **WSL:** install a compiler with `sudo apt install build-essential`.
 
-# Packages
+LSP servers and formatters install automatically via
+[mason](https://github.com/mason-org/mason.nvim) on first launch (prettier, eslint_d,
+stylua, black, isort, rustfmt, goimports, biome, …). JS/TS/JSON/CSS tooling is
+**project-aware**: when a `biome.json` is present, Biome handles formatting (conform) and
+linting/code-actions (its LSP); otherwise it falls back to ESLint/Prettier.
 
-- [Lazy](https://github.com/folke/lazy.nvim) - A modern plugin manager.
-- [ayu](https://github.com/Shatur/neovim-ayu) - Simple theme with bright accents (dark/mirage/light); Lua port of ayu.
-- [Oil](https://github.com/stevearc/oil.nvim) - File explorer (edit your filesystem like a buffer).
-- [snacks.nvim](https://github.com/folke/snacks.nvim) - QoL suite: **picker** (find/grep/LSP), **indent** guides, **input**, **notifier** (LSP progress), **words** (reference highlight), bigfile.
-- [blink.cmp](https://github.com/saghen/blink.cmp) - Fast completion engine with built-in fuzzy matching, snippets, signature help and icons.
-- [friendly-snippets](https://github.com/rafamadriz/friendly-snippets) - Snippet collection consumed by blink.
-- [nvim-autopairs](https://github.com/windwp/nvim-autopairs) - Auto-close pairs.
-- [nvim-ts-autotag](https://github.com/windwp/nvim-ts-autotag) - Auto-close/rename HTML/JSX tags.
-- [gitsigns](https://github.com/lewis6991/gitsigns.nvim) - Git integration for buffers.
-- [lualine](https://github.com/nvim-lualine/lualine.nvim) - Statusline plugin written in lua.
-- [treesitter](https://github.com/nvim-treesitter/nvim-treesitter) - Parser generator and incremental parsing library (+ textobjects).
-- [lsp-config](https://github.com/neovim/nvim-lspconfig) - Server configs for the native `vim.lsp` client.
-- [mason](https://github.com/mason-org/mason.nvim) - Installer for LSP servers, formatters and linters.
-- [conform](https://github.com/stevearc/conform.nvim) - A lightweight yet powerful formatter plugin.
-- [navic](https://github.com/SmiteshP/nvim-navic) - Statusline component showing the current code context.
-- [trouble](https://github.com/folke/trouble.nvim) - A pretty list for diagnostics, references, quickfix and location list.
-- [bufferline](https://github.com/akinsho/bufferline.nvim) - A snazzy tab/buffer line for Neovim.
-- [spectre](https://github.com/nvim-pack/nvim-spectre) - Project-wide find and replace.
-- [tmux-navigator](https://github.com/alexghergh/nvim-tmux-navigation) - Seamless Neovim ⇄ Tmux pane navigation.
+## Install
 
-### Provided by Neovim built-ins (no plugin needed)
+```sh
+git clone https://github.com/Octaviocossy/nvim.git ~/.config/nvim
+nvim
+```
 
-- **Commenting** — native `gc` / `gcc` (replaces Comment.nvim).
-- **Folding** — `foldexpr = v:lua.vim.treesitter.foldexpr()` (replaces nvim-ufo).
-- **Reference highlight / select UI / input UI** — handled by snacks (`words` / `picker.ui_select` / `input`).
+First launch installs the plugins (lazy.nvim) and tools (mason) — restart Neovim once it finishes.
 
-# Keymaps
+## Plugins
 
-| Keymap         | Description                                           |
-| -------------- | ----------------------------------------------------- |
-| `<space>w`     | Save file.                                            |
-| `<space>q`     | Quit file.                                            |
-| `<space>o`     | Open Oil.                                             |
-| `<space>sf`    | Search files (picker).                                |
-| `<space>sg`    | Search by grep (picker).                              |
-| `<space>/`     | Fuzzy search in current buffer (picker).             |
-| `gcc` / `gc`   | Toggle comment (line / selection) — native.          |
-| `<space>rn`    | Rename in current buffer (LSP).                       |
-| `<space>ca`    | Code actions (LSP).                                   |
-| `gd`           | Go to definition (LSP).                               |
-| `gr`           | Go to references (picker).                            |
-| `gi`           | Go to implementation (picker).                        |
-| `<space>bs`    | Show buffer symbols (picker).                         |
-| `<space>ps`    | Show project symbols (picker).                        |
-| `K`            | Hover document (LSP).                                 |
-| `<space>k`     | Signature documentation (LSP).                        |
-| `gD`           | Go to declaration (LSP).                              |
-| `td`           | Type definition (LSP).                                |
-| `<space>S`     | Global find/replace.                                  |
-| `<space>sw`    | Global find/replace for the word under the cursor.    |
-| `<space>h`     | Screen horizontal split.                              |
-| `<space>v`     | Screen vertical split.                                |
-| `<space>f`     | Format document.                                      |
-| `]d` / `[d`    | Go to next / previous diagnostic.                     |
-| `]e` / `[e`    | Go to next / previous error diagnostic.              |
-| `]w` / `[w`    | Go to next / previous warning diagnostic.            |
-| `<space>d`     | Open the diagnostic under the cursor in float window. |
-| `<space>td`    | Toggle document diagnostics (Trouble).               |
-| `<space>tw`    | Toggle workspace diagnostics (Trouble).              |
-| `<space>tq`    | Toggle quickfix list (Trouble).                      |
-| `<space>tl`    | Toggle location list (Trouble).                      |
-| `zr` / `zm`    | Open / close all folds.                               |
-| `zo` / `zc`    | Open / close current fold.                            |
-| `<space>gs`    | Open Git status (picker).                             |
-| `<space>no`    | Turn off highlighted results.                         |
-| `te` / `tc`    | Create / close tab.                                   |
-| `tn` / `tp`    | Go to next / previous tab.                            |
-| `<Tab>` / `<S-Tab>` | Cycle to next / previous buffer.                |
-| `db`           | Delete other buffers but the current one.             |
-| `lr`           | Restart LSP.                                          |
+**Manager** — [lazy.nvim](https://github.com/folke/lazy.nvim)
 
-# Scaffolding
+**UI & quality-of-life**
+
+- [ayu](https://github.com/Shatur/neovim-ayu) — color scheme (dark/mirage/light).
+- [lualine](https://github.com/nvim-lualine/lualine.nvim) — statusline.
+- [bufferline](https://github.com/akinsho/bufferline.nvim) — tab / buffer line.
+- [navic](https://github.com/SmiteshP/nvim-navic) — code-context breadcrumbs in the statusline.
+- [snacks.nvim](https://github.com/folke/snacks.nvim) — picker (find/grep/LSP), indent guides, input, notifier (LSP progress), word highlight, bigfile.
+
+**Editing**
+
+- [oil](https://github.com/stevearc/oil.nvim) — edit the filesystem like a buffer.
+- [treesitter](https://github.com/nvim-treesitter/nvim-treesitter) — parsing, highlighting, indentation, textobjects.
+- [nvim-autopairs](https://github.com/windwp/nvim-autopairs) — auto-close pairs.
+- [nvim-ts-autotag](https://github.com/windwp/nvim-ts-autotag) — auto-close / rename HTML & JSX tags.
+- [spectre](https://github.com/nvim-pack/nvim-spectre) — project-wide find & replace.
+
+**LSP, completion & formatting**
+
+- [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) — server configs for the native `vim.lsp` client.
+- [mason](https://github.com/mason-org/mason.nvim) — installs LSP servers, formatters and linters.
+- [blink.cmp](https://github.com/saghen/blink.cmp) — completion: fuzzy matching, snippets, signature help, icons.
+- [friendly-snippets](https://github.com/rafamadriz/friendly-snippets) — snippet collection for blink.
+- [conform](https://github.com/stevearc/conform.nvim) — formatter runner.
+- [trouble](https://github.com/folke/trouble.nvim) — diagnostics, references and quickfix list.
+
+**Git & navigation**
+
+- [gitsigns](https://github.com/lewis6991/gitsigns.nvim) — git signs in the buffer.
+- [tmux-navigator](https://github.com/alexghergh/nvim-tmux-navigation) — seamless Neovim ⇄ tmux pane movement.
+
+> Some features use **Neovim built-ins** rather than plugins: commenting (`gc` / `gcc`),
+> folding (Treesitter `foldexpr`), and `vim.ui` select / input (snacks).
+
+## Keymaps
+
+> Leader key is `<Space>`.
+
+### General
+
+| Key                       | Action                               |
+| ------------------------- | ------------------------------------ |
+| `<leader>w` / `<leader>q` | Save / quit                          |
+| `<leader>f`               | Format buffer                        |
+| `<leader>no`              | Clear search highlight               |
+| `lr`                      | Restart LSP                          |
+| `db`                      | Delete all buffers except current    |
+
+### Files & search
+
+| Key          | Action                              |
+| ------------ | ----------------------------------- |
+| `<leader>o`  | Open Oil (file explorer)            |
+| `<leader>sf` | Find files                          |
+| `<leader>sg` | Live grep                           |
+| `<leader>/`  | Fuzzy-find in current buffer        |
+| `<leader>S`  | Project-wide find & replace         |
+| `<leader>sw` | Find & replace word under cursor    |
+| `<leader>gs` | Git status                          |
+
+### LSP
+
+| Key                          | Action                          |
+| ---------------------------- | ------------------------------- |
+| `gd` / `gD`                  | Go to definition / declaration  |
+| `gr` / `gi`                  | Go to references / implementations |
+| `td`                         | Type definition                 |
+| `K` / `<leader>k`            | Hover / signature help          |
+| `<leader>rn`                 | Rename                          |
+| `<leader>ca`                 | Code action                     |
+| `<leader>bs` / `<leader>ps`  | Document / workspace symbols     |
+
+### Diagnostics & Trouble
+
+| Key                          | Action                                |
+| ---------------------------- | ------------------------------------- |
+| `]d` / `[d`                  | Next / previous diagnostic            |
+| `]e` / `[e`                  | Next / previous error                 |
+| `]w` / `[w`                  | Next / previous warning               |
+| `<leader>d`                  | Show diagnostic in a float            |
+| `<leader>td` / `<leader>tw`  | Document / workspace diagnostics      |
+| `<leader>tq` / `<leader>tl`  | Quickfix / location list              |
+
+### Folds
+
+| Key         | Action                          |
+| ----------- | ------------------------------- |
+| `zr` / `zm` | Open / close all folds          |
+| `zo` / `zc` | Open / close fold under cursor  |
+
+### Windows, tabs & buffers
+
+| Key                       | Action                            |
+| ------------------------- | --------------------------------- |
+| `<leader>h` / `<leader>v` | Horizontal / vertical split       |
+| `<C-h/j/k/l>`             | Move between splits / tmux panes  |
+| `te` / `tc`               | New / close tab                   |
+| `tn` / `tp`               | Next / previous tab               |
+| `<Tab>` / `<S-Tab>`       | Next / previous buffer            |
+
+### Editing
+
+| Key            | Action                            |
+| -------------- | --------------------------------- |
+| `gcc` / `gc`   | Toggle comment (line / selection) |
+
+### Completion — insert mode (blink.cmp)
+
+| Key                 | Action                              |
+| ------------------- | ----------------------------------- |
+| `<C-j>` / `<C-k>`   | Next / previous item                |
+| `<Tab>` / `<S-Tab>` | Next item or jump snippet / reverse |
+| `<C-Space>`         | Open menu / toggle docs             |
+| `<C-u>` / `<C-d>`   | Scroll docs                         |
+| `<CR>` / `<C-c>`    | Accept / cancel                     |
+
+### Treesitter textobjects — visual / operator-pending
+
+| Key         | Textobject                       |
+| ----------- | -------------------------------- |
+| `af` / `if` | a / inner function               |
+| `ac` / `ic` | a / inner class                  |
+| `aa` / `ia` | a / inner parameter              |
+| `]m` / `[m` | Next / previous function start   |
+| `]]` / `[[` | Next / previous class start      |
+
+## Structure
 
 ```
-├── README.md
-├── init.lua
-├── lazy-lock.json
-└── lua
-    ├── core
-    │   ├── init.lua
-    │   ├── keymaps.lua
-    │   ├── lazy.lua
-    │   ├── options.lua
-    │   └── utils.lua
-    └── plugins
-        ├── blink.lua
-        ├── bufferline.lua
-        ├── color_scheme.lua
-        ├── gitsigns.lua
-        ├── lsp.lua
-        ├── lualine.lua
-        ├── navic.lua
-        ├── oil.lua
-        ├── snacks.lua
-        ├── spectre.lua
-        ├── tmux_navigator.lua
-        └── treesitter.lua
+~/.config/nvim
+├── init.lua            # entry point → require("core")
+├── lazy-lock.json      # pinned plugin versions
+└── lua/
+    ├── core/           # loaded in order by core/init.lua
+    │   ├── options.lua  #   vim options
+    │   ├── keymaps.lua  #   all keymaps (incl. the LSP keymaps)
+    │   ├── lazy.lua     #   bootstraps lazy.nvim, imports plugins/
+    │   └── utils.lua    #   keymap helpers
+    └── plugins/        # one file per plugin spec (auto-imported)
 ```
