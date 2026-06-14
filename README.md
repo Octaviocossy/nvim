@@ -15,7 +15,7 @@ automatically via [mason](https://github.com/mason-org/mason.nvim) on first laun
 # Packages
 
 - [Lazy](https://github.com/folke/lazy.nvim) - A modern plugin manager.
-- [Catppuccin](https://github.com/catppuccin/nvim) - Soothing pastel theme.
+- [ayu](https://github.com/Shatur/neovim-ayu) - Simple theme with bright accents (dark/mirage/light); Lua port of ayu.
 - [Oil](https://github.com/stevearc/oil.nvim) - File explorer (edit your filesystem like a buffer).
 - [snacks.nvim](https://github.com/folke/snacks.nvim) - QoL suite: **picker** (find/grep/LSP), **indent** guides, **input**, **notifier** (LSP progress), **words** (reference highlight), bigfile.
 - [blink.cmp](https://github.com/saghen/blink.cmp) - Fast completion engine with built-in fuzzy matching, snippets, signature help and icons.
