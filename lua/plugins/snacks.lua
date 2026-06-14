@@ -6,6 +6,10 @@ return {
 		opts = {
 			-- Performance for very large files
 			bigfile = { enabled = true },
+			-- File explorer (replaces oil); also hijacks netrw for opening directories
+			explorer = { enabled = true, replace_netrw = true },
+			-- Inline image rendering (needs ImageMagick + a kitty-graphics terminal, e.g. Ghostty)
+			image = { enabled = true },
 			-- Indent guides + current scope (replaces indent-blankline + mini.indentscope)
 			indent = {
 				enabled = true,

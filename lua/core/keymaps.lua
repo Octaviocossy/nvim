@@ -18,10 +18,10 @@ nnoremap("<leader>w", "<cmd>w!<cr>", { silent = false })
 -- Quit with leader key
 nnoremap("<leader>q", "<cmd>q!<cr>", { silent = false })
 
--- Oil
+-- File explorer (snacks)
 nnoremap("<leader>o", function()
-  require("oil").toggle_float()
-end)
+  Snacks.explorer()
+end, { desc = "File explorer" })
 
 -- Picker (snacks)
 nnoremap("<leader>sf", function()

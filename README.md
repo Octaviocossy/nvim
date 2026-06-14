@@ -12,6 +12,8 @@ and a small set of well-integrated plugins managed by
 | ripgrep           | `brew install ripgrep`           | live grep in the picker           |
 | tree-sitter CLI   | `npm install -g tree-sitter-cli` | building Treesitter parsers       |
 | C compiler        | `xcode-select --install`         | compiling parsers                 |
+| fd                | `brew install fd`                | file finding in explorer & picker |
+| ImageMagick       | `brew install imagemagick`       | inline image rendering (snacks.image) |
 
 > **WSL:** install a compiler with `sudo apt install build-essential`.
 
@@ -20,6 +22,8 @@ LSP servers and formatters install automatically via
 stylua, black, isort, rustfmt, goimports, biome, …). JS/TS/JSON/CSS tooling is
 **project-aware**: when a `biome.json` is present, Biome handles formatting (conform) and
 linting/code-actions (its LSP); otherwise it falls back to ESLint/Prettier.
+
+> **Images:** snacks.image needs a terminal with the Kitty graphics protocol — Ghostty, kitty or WezTerm.
 
 ## Install
 
@@ -40,11 +44,10 @@ First launch installs the plugins (lazy.nvim) and tools (mason) — restart Neov
 - [lualine](https://github.com/nvim-lualine/lualine.nvim) — statusline.
 - [bufferline](https://github.com/akinsho/bufferline.nvim) — tab / buffer line.
 - [navic](https://github.com/SmiteshP/nvim-navic) — code-context breadcrumbs in the statusline.
-- [snacks.nvim](https://github.com/folke/snacks.nvim) — picker (find/grep/LSP), indent guides, input, notifier (LSP progress), word highlight, bigfile.
+- [snacks.nvim](https://github.com/folke/snacks.nvim) — picker (find/grep/LSP), file explorer, image rendering, indent guides, input, notifier (LSP progress), word highlight, bigfile.
 
 **Editing**
 
-- [oil](https://github.com/stevearc/oil.nvim) — edit the filesystem like a buffer.
 - [treesitter](https://github.com/nvim-treesitter/nvim-treesitter) — parsing, highlighting, indentation, textobjects.
 - [nvim-autopairs](https://github.com/windwp/nvim-autopairs) — auto-close pairs.
 - [nvim-ts-autotag](https://github.com/windwp/nvim-ts-autotag) — auto-close / rename HTML & JSX tags.
@@ -85,7 +88,7 @@ First launch installs the plugins (lazy.nvim) and tools (mason) — restart Neov
 
 | Key          | Action                              |
 | ------------ | ----------------------------------- |
-| `<leader>o`  | Open Oil (file explorer)            |
+| `<leader>o`  | Open file explorer                  |
 | `<leader>sf` | Find files                          |
 | `<leader>sg` | Live grep                           |
 | `<leader>/`  | Fuzzy-find in current buffer        |
