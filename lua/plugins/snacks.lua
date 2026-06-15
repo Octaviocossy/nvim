@@ -27,7 +27,7 @@ return {
 				sources = {
 					explorer = {
 						-- show the file explorer on the right
-						layout = { layout = { position = "right" } },
+						layout = { layout = { position = "right", width = 65 } },
 						-- show dotfiles and gitignored files by default (toggle with `.` / `i`)
 						hidden = true,
 						ignored = true,
